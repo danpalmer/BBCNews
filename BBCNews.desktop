@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=BBCNews
+Comment=My project description
+Exec=/usr/bin/qmlscene $@ /usr/share/BBCNews/BBCNews.qml
+Icon=qmlscene
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true
