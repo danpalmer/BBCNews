@@ -1,52 +1,51 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
+import Ubuntu.Components.ListItems 0.1
+import "models"
 
-Rectangle {
-    width: parent.width
-    height: units.gu(20)
-
+Empty {
+    
+    property string categoryId: ""
     property string title: ""
-    property string categoryID: ""
 
-    color: "transparent"
+    height: newsItemView.height + categoryTitle.height
 
-    Column {
-        Row {
-            Text {
-                text: title
-            }
+    width: parent.width
+    //color: "transparent"
+
+    Rectangle {
+        id: categoryTitle
+        width: parent.width
+        color: "transparent"
+        height: units.gu(4)
+
+        Label {
+            anchors.verticalCenter: parent.verticalCenter
+            x: units.gu(1)
+            color: UbuntuColors.coolGrey
+            text: title
+            fontSize: "large"
         }
-        Row {
-            width: 2000
-            
-            GridView {
-                id: newsItemView
-                model: newsFeed.model
-                width: units.gu(200)
+    }
 
-                NewsItemFeed {
-                    id: newsFeed
-                    category: categoryID
-                }
+    ListView {
+        id: newsItemView
+        width: parent.width
+        height: units.gu(19)
+        anchors.top: categoryTitle.bottom
+        model: newsFeed.model
+        orientation: ListView.Horizontal
+        snapMode: ListView.SnapOneItem
 
-                delegate: Column {
-                    UbuntuShape {
-                        width: 144.0
-                        height: 81.0
-                        
-                        CrossFadeImage {
-                            width: parent.width
-                            height: parent.height
-                            source: model.thumbnail
-                            fadeDuration: 1000
-                        }
-                    }
-                    Text {
-                        text: model.title
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                }
-            }
+        NewsItemFeed {
+            id: newsFeed
+            category: categoryId
+        }
+
+        delegate: NewsItemComponent {
+            text: model.description
+            image: model.thumbnail
+            link: model.link
         }
     }
 }

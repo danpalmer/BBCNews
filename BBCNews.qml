@@ -1,46 +1,27 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
-import Ubuntu.Components.ListItems 0.1 as ListItem
 import "components"
 
 MainView {
+    id: mainView
     objectName: "mainView"
     applicationName: "BBCNews"
     automaticOrientation: true
-    width: units.gu(75)
-    height: units.gu(100)
-    
+    width: 360
+    height: 640
+
     PageStack {
         id: pageStack
         anchors.fill: parent
-        Component.onCompleted: pageStack.push(categories)
+        Component.onCompleted: pageStack.push(categoriesPage)
 
-        Page {
-            id: categories
-            title: i18n.tr("BBC News")
-
-            ListView {
-                id: categoriesList
-                anchors.fill: parent
-                model: categoriesFeed.model
-
-                CategoriesFeed {
-                    id: categoriesFeed
-                }
-
-                delegate: ListItem.Empty {
-                    height: units.gu(20)
-                    CategoryComponent {
-                        title: model.title
-                        categoryID: model.id
-                    }
-                }
-            }
+        CategoriesPage {
+            id: categoriesPage
         }
 
-        Page {
-            id: articleView
-            title: 'Article'
+        NewsItemPage {
+            id: newsItem
+            visible: false
         }
     }
 }
